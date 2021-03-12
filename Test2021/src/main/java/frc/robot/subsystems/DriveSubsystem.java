@@ -63,10 +63,12 @@ public class DriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Velocity", this.velocity);
     // SmartDashboard.putNumber("Acceleration", this.acceleration);
 
-    SmartDashboard.putNumber("Nav X", RobotContainer.navx.getYaw());
-    SmartDashboard.putNumber("Enc R", RobotContainer.encR.getDistance() * Constants.rightScale);
-    SmartDashboard.putNumber("Enc L", RobotContainer.encL.getDistance());
-    
+    //SmartDashboard.putNumber("Nav X", RobotContainer.navx.getYaw());
+    //SmartDashboard.putNumber("Enc R", RobotContainer.encR.getDistance() * Constants.rightScale);
+    //SmartDashboard.putNumber("Enc L", RobotContainer.encL.getDistance());
+    SmartDashboard.putNumber("Joy Y", RobotContainer.joy1.getY());
+    SmartDashboard.putNumber("Joy Z", RobotContainer.joy1.getZ());
+
   }
 
   public void arcadeInbuilt(double y, double z) {
@@ -122,6 +124,17 @@ public class DriveSubsystem extends SubsystemBase {
   public void followBall(double angleCorrection, double distanceCorrection) {
     double correctionLeft = distanceCorrection + angleCorrection;
     double correctionRight =  distanceCorrection - angleCorrection;
+
+    if (Math.abs(correctionLeft) < Constants.minSpeed) correctionLeft = Math.signum(correctionLeft) * Constants.minSpeed;
+    if (Math.abs(correctionLeft) > Constants.maxSpeed) correctionLeft = Math.signum(correctionLeft) * Constants.maxSpeed;
+    if (Math.abs(correctionRight) < Constants.minSpeed) correctionRight = Math.signum(correctionRight) * Constants.minSpeed;
+    if (Math.abs(correctionRight) > Constants.maxSpeed) correctionRight = Math.signum(correctionRight) * Constants.maxSpeed;
+
+    drive(correctionLeft, correctionRight);
+  }
+  public void alignBall(double angleCorrection) {
+    double correctionLeft = angleCorrection;
+    double correctionRight = -angleCorrection;
 
     if (Math.abs(correctionLeft) < Constants.minSpeed) correctionLeft = Math.signum(correctionLeft) * Constants.minSpeed;
     if (Math.abs(correctionLeft) > Constants.maxSpeed) correctionLeft = Math.signum(correctionLeft) * Constants.maxSpeed;
