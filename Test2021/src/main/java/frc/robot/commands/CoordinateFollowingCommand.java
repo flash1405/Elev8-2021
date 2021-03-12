@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.MoveByDistanceCommand;
-import frc.robot.commands.BallFollowingCommand;
 import frc.robot.commands.MoveByAngleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -41,14 +40,13 @@ public class CoordinateFollowingCommand extends SequentialCommandGroup {
       double desiredAngle = Math.toDegrees(Math.atan(slopeReciprocal)) - prevAngle;
       double desiredDistance = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY)) * Constants.FIELD;
 
-      SmartDashboard.putNumber("Angle " + i, desiredAngle);
-      SmartDashboard.putNumber("Distance " + i, desiredDistance);
+      //SmartDashboard.putNumber("Angle " + i, desiredAngle);
+      //SmartDashboard.putNumber("Distance " + i, desiredDistance);
 
       addCommands(new MoveByAngleCommand(driveSubsystem, desiredAngle));
       addCommands(new BallFollowingCommand(driveSubsystem));
-      addCommands(new MoveByDistanceCommand(driveSubsystem, Constants.FIELD));
-      //addCommands(new MoveByDistanceCommand(driveSubsystem, desiredDistance));
-
+      //addCommands(new MoveByDistanceCommand(driveSubsystem, 0.5));
+      addCommands(new MoveByDistanceCommand(driveSubsystem, desiredDistance));
       prevX = x;
       prevY = y;
       prevAngle += desiredAngle;
