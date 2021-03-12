@@ -9,8 +9,10 @@ import com.kauailabs.navx.frc.AHRS;
 import java.lang.*;
 import java.util.*;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.AutoNav;
 import frc.robot.commands.BallFollowingCommand;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.subsystems.DriveSubsystem;
@@ -76,11 +78,37 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     List<double[]> coordinates = new ArrayList<double[]>();
-    coordinates.add(new double[]{0d, 2d});
-    coordinates.add(new double[]{1d, 4d});
-    coordinates.add(new double[]{-1d, 5d});
-    coordinates.add(new double[]{-1d, 10d});
-    return new CoordinateFollowingCommand(this.driveSubsystem, coordinates);
+    if(SmartDashboard.getNumber("Radius",1)>Constants.radiusClosest)
+    {
+      // AR
+      // coordinates.add(new double[]{0d, 2.8d});
+      // coordinates.add(new double[]{1.3d, 4.8d});
+      // coordinates.add(new double[]{-2d, 5.8d});
+      // coordinates.add(new double[]{0d, 11d});
+
+      // BR, B = 0, start the robot on B1
+      coordinates.add(new double[]{0d, 2.6d});
+      coordinates.add(new double[]{2.4d, 5d});
+      coordinates.add(new double[]{0d, 6.7d});
+      coordinates.add(new double[]{0.4d, 11d});
+    }
+    else{
+        // //A-B
+        // coordinates.add(new double[]{0d, 3d});
+        // coordinates.add(new double[]{2.27d, 5.7d});
+        // coordinates.add(new double[]{-1.1d, 7d});
+        // coordinates.add(new double[]{0.5d, 9d});
+        // coordinates.add(new double[]{0d, 11d});
+
+        // BB, B = 0, start the robot on B1
+        coordinates.add(new double[]{0d, 1.5d});
+        coordinates.add(new double[]{2.25d, 6d});
+        coordinates.add(new double[]{-0.3d, 8d});
+        coordinates.add(new double[]{2.35d, 10d});
+        coordinates.add(new double[]{2d, 11d});
+    }
+    //return new CoordinateFollowingCommand(this.driveSubsystem, coordinates);
+    return new AutoNav(this.driveSubsystem);
   }
 
   public static double getY(Joystick joy, double deadband) {

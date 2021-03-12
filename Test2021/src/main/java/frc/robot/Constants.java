@@ -29,12 +29,13 @@ public final class Constants {
     public static double cameraScale = 0.00025d;
     public static double rightScale = 0.4d;
     public static double radiusScale = 5.0d;
+    public static double radiusClosest = 54.0d;
 
     // public static final double T = 20 * Math.pow(10, -3);
     public static final double G = 9.81d;
     public static final double FIELD = 0.762d;
     public static final double CAM_WIDTH = 854;
-    public static final double MAX_RADIUS = 200;
+    public static final double MAX_RADIUS = 100;
     
     
 }
