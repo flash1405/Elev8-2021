@@ -73,13 +73,13 @@ public class AutoNav extends CommandBase{
                   {
                       joyZ = Double.parseDouble(line1.substring(line1.indexOf('"', temp2+1)+1,line1.lastIndexOf('"')));
                   }
-                  //System.out.println(joyY+","+joyZ);
                   break;
               }
               //System.out.println(listOfLines.get(i));
           }
           driveSubsystem.arcadeInbuilt(joyY, joyZ);
-          //System.out.println(joyY+","+joyZ);
+          SmartDashboard.putNumber("Y", joyY);
+          SmartDashboard.putNumber("Z", joyZ);
       }
     }
     catch(Exception ie){}
