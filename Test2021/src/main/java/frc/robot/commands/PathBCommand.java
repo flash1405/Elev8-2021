@@ -38,12 +38,12 @@ public class PathBCommand extends CommandBase {
       coordinates.add(new double[]{0.4d, 11d});
     }
     else{
-        //BB, B = 0, start the robot on B1
-        coordinates.add(new double[]{0d, 1.5d});
-        coordinates.add(new double[]{2.25d, 6d});
-        coordinates.add(new double[]{-0.3d, 8d});
-        coordinates.add(new double[]{2.35d, 10d});
-        coordinates.add(new double[]{2d, 11d});
+      //BB, B = 0, start the robot on B1
+      coordinates.add(new double[]{0d, 1.5d});
+      coordinates.add(new double[]{2.25d, 6d});
+      coordinates.add(new double[]{-0.3d, 8d});
+      coordinates.add(new double[]{2.35d, 10d});
+      coordinates.add(new double[]{2d, 11d});
     }
     new CoordinateFollowingCommand(this.driveSubsystem, coordinates);
   }
