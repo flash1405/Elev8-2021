@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class PathACommand extends SequentialCommandGroup {
+public class GalacticSearchPathACommand extends SequentialCommandGroup {
   /** Creates a new PathACommand. */
-  public PathACommand(DriveSubsystem driveSubsystem) {
+  public GalacticSearchPathACommand(DriveSubsystem driveSubsystem) {
     List<double[]> coordinates = new ArrayList<double[]>();
     if(SmartDashboard.getNumber("Radius",1)>Constants.radiusThreshold)
     {
