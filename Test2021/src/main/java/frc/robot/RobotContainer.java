@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.AutoNav;
+import frc.robot.commands.AutoNavPathA;
 import frc.robot.commands.BallFollowingCommand;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.subsystems.DriveSubsystem;
@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.MoveByDistanceCommand;
 import frc.robot.commands.PathACommand;
+import frc.robot.commands.SwerveCommand;
+import frc.robot.commands.SwerveCoordinateCommand;
 import frc.robot.commands.MoveByAngleCommand;
 import frc.robot.commands.CoordinateFollowingCommand;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -75,12 +77,16 @@ public class RobotContainer {
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
-   */
+   */ 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //return new PathACommand(this.driveSubsystem);
     //return new PathBCommand(this.driveSubsystem);
-    return new AutoNav(this.driveSubsystem);
+    //return new AutoNav(this.driveSubsystem);
+    //return new SwerveCommand(this.driveSubsystem, 45, Math.PI*0.5);
+    return new AutoNavPathA(this.driveSubsystem);
+    //return new SwerveCoordinateCommand(this.driveSubsystem, new ArrayList<double[]>(Arrays.asList(new double[]{-3d, 3d})));
+
   }
 
   public static double getY(Joystick joy, double deadband) {

@@ -29,12 +29,17 @@ public class BallFollowingCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //RPI
     double xCenter = SmartDashboard.getNumber("CenterX", 0.0d);
     double radius = SmartDashboard.getNumber("Radius", Constants.MAX_RADIUS);
     this.angleError = ((Constants.CAM_WIDTH * 0.5d) - xCenter) * -1 * Constants.cameraScale;
     this.distanceError = (Constants.MAX_RADIUS - radius) * Constants.cameraScale * Constants.radiusScale;
+    //LIMELIGHT
+    //this.angleError = SmartDashboard.getNumber("tx", 0.0d);
+    //double radius = SmartDashboard.getNumber("tlong", Constants.MAX_RADIUS*2)/2;
+    //this.distanceError = (Constants.MAX_RADIUS - radius) * Constants.cameraScale * Constants.radiusScale;
     //this.driveSubsystem.followBall(angleError, distanceError);
-    this.driveSubsystem.alignBall(angleError);
+    this.driveSubsystem.alignBall(this.angleError,this.distanceError);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,7 +49,6 @@ public class BallFollowingCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //!RobotContainer.joy1.getRawButton(5) || 
-    return this.angleError <= Constants.deadband;
+    return !RobotContainer.joy1.getRawButton(5) || Math.abs(this.angleError) <= Constants.deadband;
   }
 }

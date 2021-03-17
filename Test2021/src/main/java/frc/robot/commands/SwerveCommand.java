@@ -9,15 +9,17 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Constants;
 
-public class MoveByDistanceCommand extends CommandBase {
+public class SwerveCommand extends CommandBase {
 
   DriveSubsystem driveSubsystem;
-  double setpoint, error;
+  double desiredAngle, desiredDistance, angleError, distanceError;
 
-  /** Creates a new MoveByDistanceCommand. */
-  public MoveByDistanceCommand(DriveSubsystem driveSubsystem, double setpoint) {
+  /** Creates a new SwerveCommand. */
+  public SwerveCommand(DriveSubsystem driveSubsystem, double desiredAngle, double desiredDistance) {
     this.driveSubsystem = driveSubsystem;
-    this.setpoint = setpoint;
+    this.desiredAngle = desiredAngle;
+    this.desiredDistance = desiredDistance;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSubsystem);
   }
@@ -25,6 +27,7 @@ public class MoveByDistanceCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotContainer.navx.reset();
     RobotContainer.encR.reset();
     RobotContainer.encL.reset();
   }
@@ -32,9 +35,11 @@ public class MoveByDistanceCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.error = this.setpoint - ((this.driveSubsystem.getAverageDistance()) * Constants.encoderScale);
-    double correction = this.error * 0.2;
-    this.driveSubsystem.moveByDistance(correction);
+    this.angleError = this.desiredAngle - (RobotContainer.navx.getYaw() * Constants.navxScale);
+    double angleCorrection = this.angleError*Constants.kPTurn;
+    this.distanceError = this.desiredDistance - (this.driveSubsystem.getAverageDistance()) * Constants.encoderScale;
+    double distanceCorrection = this.distanceError*Constants.kPDist;
+    this.driveSubsystem.swerve(angleCorrection, distanceCorrection);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,7 +49,6 @@ public class MoveByDistanceCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //Math.abs(this.angleError) <= Constants.deadband && Math.abs(this.distanceError) <= Constants.deadband
-    return (Math.abs(this.error) <= Math.max(0.01d, (setpoint * Constants.deadband)));
+    return (Math.abs(this.angleError) <= Math.max(1.00d, (this.desiredAngle * Constants.deadband))) && (Math.abs(this.distanceError) <= Math.max(1.00d, (this.desiredDistance * Constants.deadband)));
   }
 }
