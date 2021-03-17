@@ -30,7 +30,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private double acceleration;
   private double velocity;
-  private double displacement; 
+  private double displacement;
   private double previousTime;
   private Timer timer;
 

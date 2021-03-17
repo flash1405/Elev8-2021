@@ -43,5 +43,4 @@ public final class Constants {
     public static double kPDist = 0.21;
     public static final double CAM_WIDTH = 854;
     public static final double MAX_RADIUS = 100;
-    
 }
